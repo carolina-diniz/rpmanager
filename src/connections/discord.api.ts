@@ -1,5 +1,5 @@
 import { Client, IntentsBitField } from "discord.js";
-import { SHARED } from "../static/global";
+import { SHARED } from "../shared/global";
 
 export const client = new Client({
   intents: [

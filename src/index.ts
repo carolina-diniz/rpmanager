@@ -1,8 +1,10 @@
 import { discordApi } from "./connections/discord.api";
+import { EventService } from "./core";
 
 async function initializeBot() {
   try {
     await discordApi().then(() => console.log("Bot initialized"));
+    EventService.listen()
   } catch (error) {
     console.error(error);
   }
