@@ -3,10 +3,7 @@ import { ModelGuild } from "../../../../../core/models";
 
 export async function execute(interaction: ButtonInteraction) {
   try {
-    const { customId, user, guildId } = interaction;
-
-    console.log(`Button: ${customId} user: ${user.displayName}`);
-
+    const { guildId } = interaction;
     const channel = await createChannel(interaction);
 
     if (!channel) {

@@ -13,7 +13,7 @@ export async function guildAvailable(guild: Guild) {
       await deployCommands(client.user!.id, { id, name });
     }
 
-    const guildDb = await ModelGuild.findOne({ guilId: id });
+    const guildDb = await ModelGuild.findOne({ guildId: id });
 
     if (!guildDb) {
       const guildDb = new ModelGuild({

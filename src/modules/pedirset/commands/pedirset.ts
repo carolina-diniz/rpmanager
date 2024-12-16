@@ -1,11 +1,5 @@
-import {
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  CommandInteraction,
-  EmbedBuilder,
-  SlashCommandBuilder,
-} from "discord.js";
+import { CommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { componentsButtons } from "../../buttons";
 
 export const data = new SlashCommandBuilder()
   .setName("pedirset")
@@ -13,44 +7,15 @@ export const data = new SlashCommandBuilder()
 
 export async function execute(interaction: CommandInteraction) {
   try {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply();
+    const { buttons, footer } = componentsButtons.pedirset;
 
     const embed = new EmbedBuilder()
       .setTitle("Configurações de pedido de set")
-      .setDescription("Escolha uma das opções abaixo:"); 
+      .setDescription("Escolha uma das opções abaixo:")
+      .setFooter(footer);
 
-    const createChannels = new ButtonBuilder()
-      .setCustomId("pedirset_createChannels")
-      .setEmoji('➕')
-      .setLabel("Criar canais")
-      .setStyle(ButtonStyle.Primary);
-
-    const editChannels = new ButtonBuilder()
-      .setCustomId("pedirset_editChannels")
-      .setEmoji('✍️')
-      .setLabel("Editar canais")
-      .setStyle(ButtonStyle.Primary);
-
-    const createRoles = new ButtonBuilder()
-      .setCustomId("pedirset_createRoles")
-      .setEmoji('🛂')
-      .setLabel("Add Cargos")
-      .setStyle(ButtonStyle.Primary);
-
-    const editRoles = new ButtonBuilder()
-      .setCustomId("pedirset_editRoles")
-      .setEmoji('🛂')
-      .setLabel("Edit Cargos")
-      .setStyle(ButtonStyle.Primary);
-
-    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
-      createChannels,
-      editChannels,
-      createRoles,
-      editRoles,
-    );
-
-    await interaction.editReply({embeds: [embed], components: [row] }); 
+    await interaction.editReply({ embeds: [embed], components: [buttons] });
   } catch (error) {
     console.error(error);
   }
