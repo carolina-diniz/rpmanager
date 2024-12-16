@@ -43,18 +43,11 @@ export async function execute(interaction: CommandInteraction) {
       .setLabel("Edit Cargos")
       .setStyle(ButtonStyle.Primary);
 
-    const close = new ButtonBuilder()
-      .setCustomId("close")
-      .setEmoji('❌')
-      .setLabel("Fechar")
-      .setStyle(ButtonStyle.Danger);
-
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       createChannels,
       editChannels,
       createRoles,
       editRoles,
-      close
     );
 
     await interaction.editReply({embeds: [embed], components: [row] }); 

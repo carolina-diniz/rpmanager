@@ -1,8 +1,10 @@
+import database from "./connections/database";
 import discord from "./connections/discord";
 import events from "./core/events/events";
 
 
 async function initialize() {
+  await database.connect();
   await discord();
   events().listen();
 }
