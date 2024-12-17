@@ -1,5 +1,5 @@
 export interface IModelGuild {
-  guilId: string;
+  guildId: string;
   name: string;
   memberCount: number;
   color: string;
