@@ -1,6 +1,7 @@
 import { ButtonInteraction, CommandInteraction, Interaction } from "discord.js";
 import { buttons } from "../../buttons";
 import { commands } from "../../commands";
+import { submit } from "../../submit/submit";
 
 export async function interactionCreate(interaction: Interaction) {
   console.log(`Interaction created: ${interaction.id}`);
@@ -16,11 +17,21 @@ export async function interactionCreate(interaction: Interaction) {
 
   if (interaction.isButton()) {
     const { customId } = interaction;
-    
+
     console.log(`Button: ${customId} user: ${interaction.user.displayName}`);
-    
+
     if (customId in buttons) {
       await buttons[customId as keyof typeof buttons].execute(interaction as ButtonInteraction);
+    }
+  }
+
+  if (interaction.isModalSubmit()) {
+    const { customId } = interaction;
+
+    console.log(`Modal Submit: ${customId} user: ${interaction.user.displayName}`);
+
+    if (customId in submit) {
+      await submit[customId as keyof typeof submit].execute(interaction);
     }
   }
 }

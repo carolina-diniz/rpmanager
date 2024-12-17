@@ -6,6 +6,7 @@ import {
 import { pedirset_createRoles } from "./createRoles";
 import { pedirset_editChannels } from "./editChannels";
 import { pedirset_editRoles } from "./editRoles";
+import { pedirset_start } from "./start";
 
 export const pedirsetButtons = {
   pedirset_createChannels,
@@ -14,4 +15,5 @@ export const pedirsetButtons = {
   pedirset_editRoles,
   pedirset_createAprovarset,
   pedirset_createPedirset,
+  pedirset_start,
 };
