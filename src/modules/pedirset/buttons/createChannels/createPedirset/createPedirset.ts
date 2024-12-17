@@ -1,4 +1,4 @@
-import { ButtonInteraction, ChannelType } from "discord.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonInteraction, ButtonStyle, ChannelType, EmbedBuilder } from "discord.js";
 import { ModelGuild } from "../../../../../core/models";
 
 export async function execute(interaction: ButtonInteraction) {
@@ -10,7 +10,7 @@ export async function execute(interaction: ButtonInteraction) {
       throw new Error("Channel not created");
     }
 
-    const guildDb = await ModelGuild.findOne({ guildId })
+    const guildDb = await ModelGuild.findOne({ guildId });
 
     if (!guildDb) {
       throw new Error("Guild not found");
@@ -18,10 +18,29 @@ export async function execute(interaction: ButtonInteraction) {
 
     guildDb.channels.pedirset.id = channel.id;
     guildDb.channels.pedirset.name = channel.name;
-    
+
     guildDb.save();
     console.log(`Channel created: ${channel.name}`);
-    
+
+    const embedMessage = new EmbedBuilder()
+      .setTitle(`PEDIR SET ~ ${interaction.guild?.name.toUpperCase()}`)
+      .setDescription(
+        `Sistema para pedir set do ${interaction.guild!.name}!\n` +
+          `Preencha com suas informações do jogo e não compartilhe informações pessoais.\n\n` +
+          `Clique no botão \` Iniciar \` para pedir seu set.`
+      );
+
+    const start = new ButtonBuilder()
+      .setCustomId("pedirset_start")
+      .setLabel("Iniciar")
+      .setStyle(ButtonStyle.Success)
+      .setEmoji({ name: "✅" });
+
+    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(start);
+
+    if (channel && channel.isTextBased()) {
+      await channel.send({ embeds: [embedMessage], components: [row] });
+    }
   } catch (error) {
     console.error(error);
   }
